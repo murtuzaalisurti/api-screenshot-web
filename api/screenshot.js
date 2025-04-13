@@ -187,7 +187,9 @@ export async function GET(request, context) {
     }
   }
 
+  console.log('url before decodeURIComponent', url);
   url = decodeURIComponent(url);
+  console.log('url after decodeURIComponent', url);
 
   try {
     if(!isFullUrl(url)) {
