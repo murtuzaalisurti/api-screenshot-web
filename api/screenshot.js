@@ -1,5 +1,6 @@
 import screenshot from "../screenshot.js";
 import screenshotOptions from "../screenshot-options.js";
+import jsdom from "jsdom";
 
 const ONE_MINUTE = 60;
 const ONE_HOUR = ONE_MINUTE*60;
@@ -18,6 +19,13 @@ function isFullUrl(url) {
     // invalid url OR local path
     return false;
   }
+}
+
+function decodeHtml(html) {
+  const document = new jsdom.JSDOM("<!DOCTYPE html><html lang='en'><body></body></html>").window.document;
+  let txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
 }
 
 function getBlankImageResponse(width, height, errorMessage) {
@@ -188,7 +196,7 @@ export async function GET(request, context) {
   }
 
   console.log('url before decodeURIComponent', url);
-  url = decodeURIComponent(url);
+  url = decodeHtml(decodeURIComponent(url));
   console.log('url after decodeURIComponent', url);
 
   try {
