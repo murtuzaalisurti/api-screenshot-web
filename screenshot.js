@@ -45,6 +45,9 @@ async function screenshot(url, options = {}) {
     await page.evaluate(() => window.stop());
   }
 
+  // Wait for fonts to be loaded
+  await page.evaluate(() => document.fonts.ready);
+
   // let statusCode = response.status();
   // TODO handle 4xx/5xx status codes better
 
